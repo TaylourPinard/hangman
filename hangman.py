@@ -16,7 +16,6 @@ def main():
     with open('word_list.txt') as dict:
         words = dict.readlines()
     word = choice(words).strip()
-    print(word)
     letters = list(word)
     dict.close()
     
@@ -25,23 +24,25 @@ def main():
     while strikes <= 5:
         # lose state
         if strikes == 5:
-            print(f"strikes: {strikes * 'X '}")
-            get_dict_entry = input(f"word was {word} get definition? Y/N ").upper()
-            if get_dict_entry:
-                dictionary = PyDictionary()
-                print(dictionary.meaning(word))
-            
+            print(f"Strikes: {strikes * 'X '}")
+            define = input(f"Word was {word} get definition? Y/N ").upper()
+            if define == "Y": get_definition(word)
+            exit()
 
         # still playing
         guessed_letters(guess_list)
-        print(f"strikes: {strikes * 'X '}")
+        print(f"Strikes: {strikes * 'X '}")
+        if guessing(guess_list, word) == word:
+            define = input(f"Word was {word} get definition? Y/N ").upper()
+            if define == "Y": get_definition(word)
+            exit()
 
         # print spaces and correct guesses
         if guess_list == None: print("_" * len(letters))
         else: print(guessing(guess_list, letters))
         try:
             # get and sanitize player input
-            guess = input("please choose a letter: ").lower()
+            guess = input("Please choose a letter: ").lower()
             if len(guess) > 1: raise ValueError
             if guess in guess_list or guess.isalpha() == False: raise ValueError
             if type(guess) != str: raise TypeError
@@ -60,7 +61,7 @@ def main():
 def guessed_letters(guess_list):
     if guess_list:
         guess_list = "".join(guess_list)
-        print(f"guessed: {', '.join(guess_list)}")
+        print(f"Guessed: {', '.join(guess_list)}")
 
 
 # show the correctly guessed letters and blank tiles
@@ -72,6 +73,10 @@ def guessing(guess_list, letters):
                 new_word[i] = letter
     return "".join(new_word)
 
+
+def get_definition(word):
+    dictionary = PyDictionary()
+    print(dictionary.meaning(word))
 
 if __name__ == "__main__":
     main()
