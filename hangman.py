@@ -4,6 +4,8 @@
 
 from random import choice
 from sys import exit
+from PyDictionary import PyDictionary
+
 
 def main():
     # letters that have been guessed
@@ -20,12 +22,15 @@ def main():
     
     # game loop
     # TODO: add win state
-    # TODO: add dictionary option after win/loss
     while strikes <= 5:
         # lose state
         if strikes == 5:
             print(f"strikes: {strikes * 'X '}")
-            exit(f"word was {word}")
+            get_dict_entry = input(f"word was {word} get definition? Y/N ").upper()
+            if get_dict_entry:
+                dictionary = PyDictionary()
+                print(dictionary.meaning(word))
+            
 
         # still playing
         guessed_letters(guess_list)
