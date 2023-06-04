@@ -20,7 +20,6 @@ def main():
     dict.close()
     
     # game loop
-    # TODO: add win state
     while strikes <= 5:
         # lose state
         if strikes == 5:
@@ -73,7 +72,7 @@ def guessing(guess_list, letters):
                 new_word[i] = letter
     return "".join(new_word)
 
-
+# get the definition of the word played
 def get_definition(word):
     dictionary = PyDictionary()
     print(dictionary.meaning(word))
